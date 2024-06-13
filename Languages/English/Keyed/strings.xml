@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <allowUseBuildingUsageLabel>Allow use</allowUseBuildingUsageLabel>
+    <allowUseBuildingUsageDesc>Allow using Building Usage Desc</allowUseBuildingUsageDesc>
+    
+    <shouldSwitchPowerLabel>Allow Switch Power</shouldSwitchPowerLabel>
+    <shouldSwitchPowerDesc>Allow pawns to cut power while the table are not used</shouldSwitchPowerDesc>
+    
+    <checkboxHeadline>HEADLINE</checkboxHeadline>
+
+    <shouldSpawnUnpoweredLabel>Spawn buildings unpowered.</shouldSpawnUnpoweredLabel>
+    <shouldSpawnUnpoweredTooltip>Buildings will not have power when constructed.</shouldSpawnUnpoweredTooltip>
+
+    <hideTogglePowerLabel>Hide designate power button</hideTogglePowerLabel>
+    <hideTogglePowerTooltip>When enabled, designate power button will not be shown.(only works on the building that require power to work!)</hideTogglePowerTooltip>
+    <hideForbidBuildingLabel>Hide allow use building button</hideForbidBuildingLabel>
+    <hideForbidBuildingTooltip>When enabled, allow use building button will be hided.</hideForbidBuildingTooltip>
+    <powerOnWhenUnforbiddenLabel>Set power on when using a building is allowed again. </powerOnWhenUnforbiddenLabel>
+    <powerOnWhenUnforbiddenTooltip>When enabled, allows to buildings connect to power automatically.</powerOnWhenUnforbiddenTooltip>
+    
+    <FALSEpowerOnWhenUnforbiddenLabel>You should enable "Allow Use Building" button. </FALSEpowerOnWhenUnforbiddenLabel>
+    <!--<FALSEpowerOnWhenUnforbiddenTooltip>You should enable "Allow Use Building" button.</FALSEpowerOnWhenUnforbiddenTooltip>-->
+    
+</LanguageData>
