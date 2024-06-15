@@ -1,2 +1,2 @@
-# ThingLimiter
-Rimworld ThingLimiter mod
+# Energy Saver
+Rimworld Energy Saver mod
