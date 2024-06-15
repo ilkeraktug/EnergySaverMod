@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <forbidBuildingUsageLabel>Forbid Building Usage TR</forbidBuildingUsageLabel>
-    <forbidBuildingUsageDesc>Forbid Building Usage Desc TR</forbidBuildingUsageDesc>
+    <allowUseBuildingUsageLabel>İzin Ver</allowUseBuildingUsageLabel>
+    <allowUseBuildingUsageDesc>Kullanmaya izin ver. (Enerjiyi kapatmak binanın kullanmasını engellemiyor!)</allowUseBuildingUsageDesc>
+
+    <shouldSwitchPowerLabel>İzin ver : Enerji Kapat/Aç</shouldSwitchPowerLabel>
+    <shouldSwitchPowerDesc>Bina kullanılmadığı zamanlarda elektriği kapatılma ayarı</shouldSwitchPowerDesc>
+
+    <checkboxHeadline>Bina Ayarları</checkboxHeadline>
+
+    <shouldSpawnUnpoweredLabel>Binaları inşa edildiğinde elektriğini kapat.</shouldSpawnUnpoweredLabel>
+    <shouldSpawnUnpoweredTooltip>Binalar inşa edildiğinde elektriği olup olmamasını ayarla</shouldSpawnUnpoweredTooltip>
+
+    <hideTogglePowerLabel>Enerji akışını kontrol eden düğmeyi gizle.</hideTogglePowerLabel>
+    <hideTogglePowerTooltip>Etkinleştirildiğinde, enerji akışını kontrol eden düğme gizlenir. \n(İnsanların binayı kullanmamasını istiyorsanız "İzin Ver" düğmesini kullanın.) \n(Sadece çalışmak için enerji isteyen binalar için geçerlidir!)</hideTogglePowerTooltip>
+    <hideForbidBuildingLabel>"İzin Ver" düğmesini gizle.</hideForbidBuildingLabel>
+    <hideForbidBuildingTooltip>Etkinleştirildiğinde, "İzin Ver" butonu gizlenecektir..</hideForbidBuildingTooltip>
+
 </LanguageData>
