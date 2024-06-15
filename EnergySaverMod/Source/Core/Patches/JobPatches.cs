@@ -11,19 +11,18 @@ public static class Pawn_JobTracker_Pawn_JobTracker_StartJob
 {
 	public static void Postfix(Pawn_JobTracker __instance)
 	{
-		if (__instance.curJob?.def == JobDefOf.Research)
-		{
-			Log.Message($"Log{__instance.curJob?.ToString()}");
-		}
-		
 		if (__instance.curJob?.def == JobDefOf.DoBill || __instance.curJob?.def == JobDefOf.Research)
 		{
 			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetA.Thing);
-			if(flickable != null && !PatchesHelper.CanWorkWithoutPower(__instance.curJob?.targetA.Thing))
+			
+			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetA.Thing))
 			{
-				Log.Message("flickableStart " + flickable);
-				flickable.SwitchIsOn = true;
-				flickable.WantsFlick();
+				//Log.Message("flickableStart " + flickable);
+				// flickable.SwitchIsOn = true;
+				// flickable.WantsFlick();
+				
+				PatchesHelper.SetSwitch(flickable, true);
+
 			}
 		}
 	}
@@ -38,11 +37,13 @@ public static class Pawn_JobTracker_Pawn_JobTracker_EndCurrentJob
 		{
 			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetA.Thing);
 			
-			if(flickable != null && !PatchesHelper.CanWorkWithoutPower(__instance.curJob?.targetA.Thing))
+			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetA.Thing))
 			{
-				Log.Message("flickableEnd " + flickable);
-				flickable.SwitchIsOn = false;
-				flickable.WantsFlick();
+				//Log.Message("flickableEnd " + flickable);
+				// flickable.SwitchIsOn = false;
+				// flickable.WantsFlick();
+				
+				PatchesHelper.SetSwitch(flickable, false);
 			}
 		}
 

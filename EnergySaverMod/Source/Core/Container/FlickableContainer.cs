@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EnergySaverMod.Source.Core.Helper;
+using EnergySaverMod.Source.Core.Mod;
 using RimWorld;
 using Verse;
 
@@ -18,31 +20,27 @@ public class Bool
 		Value = InValue;
 	}
 }
+
 public static class FlickableContainer
 {
 	public static Dictionary<CompFlickable, Bool> s_FlickableContainer = new ();
-
-	public static bool GetIsActive(Thing thing)
+	
+	public static Dictionary<CompFlickable, Bool> s_SwitchPowerContainer = new ();
+	
+	public static Dictionary<CompPowerTrader, OverlayHandle?> s_OverlayContainer = new ();
+	
+	public static bool GetIsAllowed(Thing thing)
 	{
+		//Log.Message($"Thing {thing}");
 		CompFlickable flickable = GetComponentHelper.GetFlickableComponent(thing);
-		
-		if (flickable == null)
-		{
-			return false;
-		}
 
-		if (s_FlickableContainer.ContainsKey(flickable))
-		{
-			return s_FlickableContainer[flickable].Value;
-		}
-
-		return true;
+		return GetIsAllowed(flickable);
 	}
-	public static bool GetIsActive(CompFlickable flickable)
+	public static bool GetIsAllowed(CompFlickable flickable)
 	{
-		if (flickable == null)
+		if (flickable == null || EnerySaverModSettings.bShouldHideForbidBuilding)
 		{
-			return false;
+			return true;
 		}
 
 		if (s_FlickableContainer.ContainsKey(flickable))
@@ -52,7 +50,7 @@ public static class FlickableContainer
 
 		return true;
 	}
-	public static void ToggleIsActive(CompFlickable flickable)
+	public static void ToggleIsAllowed(CompFlickable flickable)
 	{
 		if (s_FlickableContainer.ContainsKey(flickable))
 		{
@@ -63,5 +61,67 @@ public static class FlickableContainer
 		
 		Bool value = new Bool(false);
 		s_FlickableContainer.Add(flickable, value);
+	}
+	public static bool GetShouldSwitchPower(Thing thing)
+	{
+		CompFlickable flickable = GetComponentHelper.GetFlickableComponent(thing);
+		
+		return GetShouldSwitchPower(flickable);
+	}
+	public static bool GetShouldSwitchPower(CompFlickable flickable)
+	{
+		if (flickable == null)
+		{
+			return false;
+		}
+
+		if (s_SwitchPowerContainer.ContainsKey(flickable))
+		{
+			return s_SwitchPowerContainer[flickable].Value;
+		}
+
+		return !PatchesHelper.CanWorkWithoutPower(flickable.parent);
+	}
+	public static void ToggleShouldSwitchPower(CompFlickable flickable)
+	{
+		if (s_SwitchPowerContainer.ContainsKey(flickable))
+		{
+			s_SwitchPowerContainer[flickable].Value = !s_SwitchPowerContainer[flickable].Value;
+			
+			return;
+		}
+
+		Bool value;
+		if (!PatchesHelper.CanWorkWithoutPower(flickable.parent))
+		{
+			value = new Bool(false);
+		}
+		else
+		{
+			value = new Bool(true);
+		}
+		
+		s_SwitchPowerContainer.Add(flickable, value);
+	}
+
+	public static OverlayHandle? GetOverlayHandle(CompPowerTrader powerTrader)
+	{
+		if (s_OverlayContainer.ContainsKey(powerTrader))
+		{
+			return s_OverlayContainer[powerTrader];
+		}
+		
+		return new OverlayHandle();
+	}
+	
+	public static void UpdateOverlayHandle(CompPowerTrader powerTrader, OverlayHandle? handle)
+	{
+		if (s_OverlayContainer.ContainsKey(powerTrader))
+		{
+			s_OverlayContainer[powerTrader] = handle;
+			return;
+		}
+
+		s_OverlayContainer.Add(powerTrader, handle);
 	}
 }

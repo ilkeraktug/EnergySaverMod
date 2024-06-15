@@ -1,4 +1,6 @@
-﻿using EnergySaverMod.Source.Core.Helper;
+﻿using System.Reflection;
+using EnergySaverMod.Source.Core.Helper;
+using EnergySaverMod.Source.Core.Mod;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -13,11 +15,15 @@ public static class Building_ResearchBench_SpawnSetup_Patches
 		if ((__instance is Building_ResearchBench || __instance is Building_WorkTable) && respawningAfterLoad == false)
 		{
 			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance);
-			if (flickable != null)
+			if (EnerySaverModSettings.bShouldSpawnUnpowered && flickable != null)
 			{
-				Log.Message("SpawnSetup " + flickable);
-				flickable.SwitchIsOn = false;
-				flickable.WantsFlick();
+				// bool myBool = false;
+				// FieldInfo wantSwitchOnFieldInfo = AccessTools.Field(typeof(CompFlickable), "wantSwitchOn");
+				// wantSwitchOnFieldInfo.SetValue(flickable, myBool);
+				//
+				// flickable.SwitchIsOn = false;
+
+				PatchesHelper.SetSwitch(flickable, false);
 			}
 		}
 	}
@@ -28,9 +34,12 @@ public static class ResearchProjectDef_CanBeResearchedAt_Patches
 {
 	public static void Postfix(ref bool __result, ResearchProjectDef __instance, Building_ResearchBench bench, bool ignoreResearchBenchPowerStatus)
 	{
-		if (!ignoreResearchBenchPowerStatus && PatchesHelper.CanUseNow(bench))
+		bool shouldCare = false;
+		bool tempResult = PatchesHelper.CanUseNow(bench, ref shouldCare);
+		if (!ignoreResearchBenchPowerStatus && shouldCare)
 		{
-			__result = true;
+			//Log.Message($"CanBeResearchedAt({tempResult})");
+			__result = tempResult;
 		}
 	}
 }
@@ -40,9 +49,11 @@ public static class Building_WorkTable_UsableForBillsAfterFueling_Patches
 {
 	public static void Postfix(ref bool __result, Building_WorkTable __instance)
 	{
-		if(PatchesHelper.CanUseNow(__instance))
+		bool shouldCare = false;
+		bool tempResult = PatchesHelper.CanUseNow(__instance, ref shouldCare);
+		if (shouldCare)
 		{
-			__result = true;
+			__result = tempResult;
 		}
 	}
 }
@@ -52,9 +63,11 @@ public static class Building_WorkTable_CurrentlyUsableForBills_Patches
 {
 	public static void Postfix(ref bool __result, Building_WorkTable __instance)
 	{
-		if(PatchesHelper.CanUseNow(__instance))
+		bool shouldCare = false;
+		bool tempResult = PatchesHelper.CanUseNow(__instance, ref shouldCare);
+		if (shouldCare)
 		{
-			__result = true;
+			__result = tempResult;
 		}
 	}
 }
