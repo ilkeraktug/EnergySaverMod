@@ -45,6 +45,8 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+EnergySaverMod/obj/**
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta

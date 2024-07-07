@@ -1,4 +1,5 @@
-﻿using EnergySaverMod.Source.Core.Helper;
+﻿using EnergySaverMod.Source.Core.Container;
+using EnergySaverMod.Source.Core.Helper;
 using HarmonyLib;
 using RimWorld;
 using Verse;
@@ -17,13 +18,21 @@ public static class Pawn_JobTracker_Pawn_JobTracker_StartJob
 			
 			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetA.Thing))
 			{
-				//Log.Message("flickableStart " + flickable);
-				// flickable.SwitchIsOn = true;
-				// flickable.WantsFlick();
-				
 				PatchesHelper.SetSwitch(flickable, true);
-
 			}
+			
+			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetA.Thing as Building_ResearchBench, true);
+		}
+		else if (__instance.curJob?.def == JobDefOf.AnalyzeItem)
+		{
+			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetB.Thing);
+			
+			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetB.Thing))
+			{
+				PatchesHelper.SetSwitch(flickable, true);
+			}
+
+			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetB.Thing as Building_ResearchBench, true);
 		}
 	}
 }
@@ -39,12 +48,21 @@ public static class Pawn_JobTracker_Pawn_JobTracker_EndCurrentJob
 			
 			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetA.Thing))
 			{
-				//Log.Message("flickableEnd " + flickable);
-				// flickable.SwitchIsOn = false;
-				// flickable.WantsFlick();
-				
 				PatchesHelper.SetSwitch(flickable, false);
 			}
+			
+			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetA.Thing as Building_ResearchBench, false);
+		}
+		else if (__instance.curJob?.def == JobDefOf.AnalyzeItem)
+		{
+			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetB.Thing);
+			
+			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetB.Thing))
+			{
+				PatchesHelper.SetSwitch(flickable, false);
+			}
+			
+			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetB.Thing as Building_ResearchBench, false);
 		}
 
 		return true;

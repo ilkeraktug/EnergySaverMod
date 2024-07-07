@@ -15,7 +15,7 @@ public static class CompFlickable_CompGetGizmosExtra_Patches
 {
 	public static void Postfix(ref IEnumerable<Gizmo> __result, CompFlickable __instance)
 	{
-		if (!(__instance.parent is Building_WorkTable || __instance.parent is Building_ResearchBench))
+		if (!(__instance.parent is Building_WorkTable || __instance.parent is Building_ResearchBench || FacilityHelper.IsMultiAnalyzer(__instance)))
 		{
 			return;
 		}

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using EnergySaverMod.Source.Core.Container;
 using EnergySaverMod.Source.Core.Helper;
 using EnergySaverMod.Source.Core.Mod;
 using HarmonyLib;
@@ -17,14 +18,15 @@ public static class Building_ResearchBench_SpawnSetup_Patches
 			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance);
 			if (EnerySaverModSettings.bShouldSpawnUnpowered && flickable != null)
 			{
-				// bool myBool = false;
-				// FieldInfo wantSwitchOnFieldInfo = AccessTools.Field(typeof(CompFlickable), "wantSwitchOn");
-				// wantSwitchOnFieldInfo.SetValue(flickable, myBool);
-				//
-				// flickable.SwitchIsOn = false;
-
 				PatchesHelper.SetSwitch(flickable, false);
 			}
+		}
+
+		FacilityHelper.TryStore(__instance);
+
+		if (EnerySaverModSettings.bShouldSpawnUnpowered && respawningAfterLoad == false)
+		{
+			FacilityHelper.SetPowerValue(__instance, false);
 		}
 	}
 }

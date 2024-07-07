@@ -68,9 +68,15 @@ public class PatchesHelper
 
 	public static void SetSwitch(CompFlickable flickable, bool value)
 	{
+		if (flickable == null)
+		{
+			return;
+		}
+		
 		FieldInfo wantSwitchOnFieldInfo = AccessTools.Field(typeof(CompFlickable), "wantSwitchOn");
 		wantSwitchOnFieldInfo.SetValue(flickable, value);
 				
 		flickable.SwitchIsOn = value;
 	}
+	
 }
