@@ -33,18 +33,15 @@ public static class FacilityHelper
 
 		if (multiAnalyzerFacilityComp != null)
 		{
+			if (value == false && AnyOtherLinkedResearchTableRequireMultiAnalyzer(multiAnalyzerFacilityComp, researchBench))
+			{
+				return;
+			}
+			
 			if (PatchesHelper.ShouldSwitchPower(multiAnalyzerFacilityComp.parent))
 			{
 				SetPowerValue(multiAnalyzerFacilityComp.parent, value);
 			}
-			else
-			{
-				Log.Error($"multiAnalyzerFacilityComp ShouldSwitchPower FALSE");
-			}
-		}
-		else
-		{
-			Log.Error($"multiAnalyzerFacilityComp is NULL");
 		}
 	}
 
@@ -56,9 +53,24 @@ public static class FacilityHelper
 		{
 			return;
 		}
-		
+
 		PatchesHelper.SetSwitch(parentFlickable, value);
 	}
+
+	public static bool IsMultiAnalyzer(CompFlickable instance)
+	{
+		if (s_MultiAnalyzerCheckCache.ContainsKey(instance))
+		{
+			return s_MultiAnalyzerCheckCache[instance];
+		}
+
+		bool bHasFacilityComp = instance.parent.GetComp<CompFacility>() != null;
+		
+		s_MultiAnalyzerCheckCache.Add(instance, bHasFacilityComp);
+
+		return bHasFacilityComp;
+	}
+	
 	private static CompFacility GetLinkedResearchBench(Building_ResearchBench researchBench)
 	{
 		foreach (var facilityComp in s_FacilityContainer)
@@ -74,18 +86,31 @@ public static class FacilityHelper
 
 		return null;
 	}
-	
-	public static bool IsMultiAnalyzer(CompFlickable instance)
+
+	public static bool AnyOtherLinkedResearchTableRequireMultiAnalyzer(CompFacility facilityComp, Building_ResearchBench researchBench)
 	{
-		if (s_MultiAnalyzerCheckCache.ContainsKey(instance))
+		if (Find.ResearchManager.GetProject() == null)
 		{
-			return s_MultiAnalyzerCheckCache[instance];
+			return false;
 		}
-
-		bool bHasFacilityComp = instance.parent.GetComp<CompFacility>() != null;
 		
-		s_MultiAnalyzerCheckCache.Add(instance, bHasFacilityComp);
-
-		return bHasFacilityComp;
+		foreach (var linkedBuilding in facilityComp.LinkedBuildings)
+		{
+			if (linkedBuilding is Building_ResearchBench linkedBuildingAsResearchBench && linkedBuilding != researchBench)
+			{
+				foreach (var pawn in Find.CurrentMap.mapPawns.AllPawns)
+				{
+					if (pawn.Faction == Find.FactionManager.OfPlayer)
+					{
+						if (pawn.Position == linkedBuildingAsResearchBench.InteractionCell)
+						{
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 }
