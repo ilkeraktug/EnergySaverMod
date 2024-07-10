@@ -9,14 +9,14 @@ namespace EnergySaverMod.Source.Core.Container;
 
 public static class FacilityHelper
 {
-	public static HashSet<CompFacility> s_FacilityContainer = new ();
-	
-	public static Dictionary<CompFlickable, bool> s_MultiAnalyzerCheckCache = new ();
+	public static HashSet<CompFacility> s_FacilityContainer = new();
+
+	public static Dictionary<CompFlickable, bool> s_MultiAnalyzerCheckCache = new();
 
 	public static void TryStore(Building building)
 	{
 		CompFacility facility = building.GetComp<CompFacility>();
-		if(facility != null)
+		if (facility != null)
 		{
 			s_FacilityContainer.Add(facility);
 		}
@@ -28,7 +28,7 @@ public static class FacilityHelper
 		{
 			return;
 		}
-		
+
 		CompFacility multiAnalyzerFacilityComp = GetLinkedResearchBench(researchBench);
 
 		if (multiAnalyzerFacilityComp != null)
@@ -37,7 +37,7 @@ public static class FacilityHelper
 			{
 				return;
 			}
-			
+
 			if (PatchesHelper.ShouldSwitchPower(multiAnalyzerFacilityComp.parent))
 			{
 				SetPowerValue(multiAnalyzerFacilityComp.parent, value);
@@ -48,7 +48,7 @@ public static class FacilityHelper
 	public static void SetPowerValue(Thing parent, bool value)
 	{
 		CompFlickable parentFlickable = GetComponentHelper.GetFlickableComponent(parent);
-		
+
 		if (parentFlickable == null)
 		{
 			return;
@@ -65,12 +65,12 @@ public static class FacilityHelper
 		}
 
 		bool bHasFacilityComp = instance.parent.GetComp<CompFacility>() != null;
-		
+
 		s_MultiAnalyzerCheckCache.Add(instance, bHasFacilityComp);
 
 		return bHasFacilityComp;
 	}
-	
+
 	private static CompFacility GetLinkedResearchBench(Building_ResearchBench researchBench)
 	{
 		foreach (var facilityComp in s_FacilityContainer)
@@ -86,31 +86,56 @@ public static class FacilityHelper
 
 		return null;
 	}
-
-	public static bool AnyOtherLinkedResearchTableRequireMultiAnalyzer(CompFacility facilityComp, Building_ResearchBench researchBench)
+	
+	public static bool AnyOtherLinkedResearchTableRequireMultiAnalyzer(CompFacility facilityComp,
+		Building_ResearchBench researchBench)
 	{
+		List<Thing> analyzingResearchTables = new();
+
 		if (Find.ResearchManager.GetProject() == null)
 		{
-			return false;
+			foreach (var pawn in Find.CurrentMap.mapPawns.AllPawns)
+			{
+				if (pawn.Faction == Find.FactionManager.OfPlayer)
+				{
+					if (pawn.CurJobDef == JobDefOf.AnalyzeItem && pawn.CurJob != null)
+					{
+						analyzingResearchTables.Add(pawn.CurJob.targetB.Thing);
+					}
+				}
+			}
 		}
-		
+
 		foreach (var linkedBuilding in facilityComp.LinkedBuildings)
 		{
-			if (linkedBuilding is Building_ResearchBench linkedBuildingAsResearchBench && linkedBuilding != researchBench)
+			if (linkedBuilding != null && linkedBuilding != researchBench)
 			{
+				if (Find.ResearchManager.GetProject() == null)
+				{
+					foreach (var e in analyzingResearchTables)
+					{
+						if (linkedBuilding == e)
+						{
+							return true;
+						}
+					}
+				}
+
 				foreach (var pawn in Find.CurrentMap.mapPawns.AllPawns)
 				{
 					if (pawn.Faction == Find.FactionManager.OfPlayer)
 					{
-						if (pawn.Position == linkedBuildingAsResearchBench.InteractionCell)
+						if (pawn.Position == linkedBuilding.InteractionCell)
 						{
 							return true;
 						}
 					}
 				}
 			}
+
 		}
 		
 		return false;
 	}
 }
+		
