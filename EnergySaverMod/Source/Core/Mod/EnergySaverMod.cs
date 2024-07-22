@@ -45,6 +45,7 @@ namespace EnergySaverMod.Source.Core.Mod
 			listing_Standard.Gap();
 			Text.Font = GameFont.Small;
 			listing_Standard.CheckboxLabeled("shouldSpawnUnpoweredLabel".Translate(), ref EnerySaverModSettings.bShouldSpawnUnpowered, "shouldSpawnUnpoweredTooltip".Translate());
+			listing_Standard.CheckboxLabeled("shouldLoadPowerStateAfterLoadLabel".Translate(), ref EnerySaverModSettings.bShouldLoadPowerStateAfterLoad, "shouldLoadPowerStateAfterLoadTooltip".Translate());
 			
 			listing_Standard.CheckboxLabeled("hideTogglePowerLabel".Translate(), ref EnerySaverModSettings.bShouldHideTogglePower, "hideTogglePowerTooltip".Translate());
 			listing_Standard.CheckboxLabeled("hideForbidBuildingLabel".Translate(), ref EnerySaverModSettings.bShouldHideForbidBuilding, "hideForbidBuildingTooltip".Translate());

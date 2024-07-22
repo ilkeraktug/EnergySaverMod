@@ -77,6 +77,8 @@ public class PatchesHelper
 		wantSwitchOnFieldInfo.SetValue(flickable, value);
 				
 		flickable.SwitchIsOn = value;
+
+		FlickableContainer.SetPowerValue(flickable, value);
 	}
 	
 }

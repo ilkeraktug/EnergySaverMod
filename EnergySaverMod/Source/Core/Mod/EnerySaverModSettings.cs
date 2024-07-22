@@ -8,6 +8,8 @@ public class EnerySaverModSettings : ModSettings
 	
 	public static bool bShouldHideTogglePower = true;
 	public static bool bShouldHideForbidBuilding = false;
+	
+	public static bool bShouldLoadPowerStateAfterLoad = true;
 
 	public override void ExposeData()
 	{
@@ -16,5 +18,6 @@ public class EnerySaverModSettings : ModSettings
 		
 		Scribe_Values.Look(ref bShouldHideTogglePower, "bShouldHideTogglePower", true, false);
 		Scribe_Values.Look(ref bShouldHideForbidBuilding, "bShouldHideForbidBuilding", false, false);
+		Scribe_Values.Look(ref bShouldLoadPowerStateAfterLoad, "bShouldLoadPowerStateAfterLoad", true, false);
 	}
 }

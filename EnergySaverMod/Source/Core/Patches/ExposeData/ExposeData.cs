@@ -21,8 +21,24 @@ public static class CompFlickable_ExposeData_Patcher
 		{
 			FlickableContainer.s_SwitchPowerContainer.Add(__instance, new Bool());
 		}
-		
+
+		bool value = true;
+		if (!FlickableContainer.s_PowerValueContainer.ContainsKey(__instance))
+		{
+			if (FacilityHelper.ShouldModifyPower(__instance))
+			{
+				value = false;
+			}
+			
+			FlickableContainer.s_PowerValueContainer.Add(__instance, new Bool(value));
+		}
+		else
+		{
+			FlickableContainer.s_PowerValueContainer[__instance].Value = __instance.SwitchIsOn;
+		}
+
 		Scribe_Values.Look(ref FlickableContainer.s_FlickableContainer[__instance].Value, "flickableContainer", true, false);
 		Scribe_Values.Look(ref FlickableContainer.s_SwitchPowerContainer[__instance].Value, "switchPowerContainer", true, false);
+		Scribe_Values.Look(ref FlickableContainer.s_PowerValueContainer[__instance].Value, "IsPowerOffContainer", false, false);
 	}
 }

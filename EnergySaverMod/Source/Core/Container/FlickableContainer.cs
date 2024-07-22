@@ -27,6 +27,8 @@ public static class FlickableContainer
 	
 	public static Dictionary<CompFlickable, Bool> s_SwitchPowerContainer = new ();
 	
+	public static Dictionary<CompFlickable, Bool> s_PowerValueContainer = new ();
+	
 	public static Dictionary<CompPowerTrader, OverlayHandle?> s_OverlayContainer = new ();
 	
 	public static bool GetIsAllowed(Thing thing)
@@ -82,6 +84,53 @@ public static class FlickableContainer
 
 		return !PatchesHelper.CanWorkWithoutPower(flickable.parent);
 	}
+
+	public static void SetPowerValue(Thing thing, bool value)
+	{
+		CompFlickable flickable = GetComponentHelper.GetFlickableComponent(thing);
+		
+		SetPowerValue(flickable, value);
+	}
+	public static void SetPowerValue(CompFlickable flickable, bool value)
+	{
+		if (flickable == null)
+		{
+			return;
+		}
+		
+		Bool myValue = new Bool(value);
+		
+		if (s_PowerValueContainer.ContainsKey(flickable))
+		{
+			s_PowerValueContainer[flickable] = myValue;
+		}
+		else
+		{
+			s_PowerValueContainer.Add(flickable, myValue);
+		}
+	}
+	public static bool GetPowerValue(Thing thing)
+	{
+		CompFlickable flickable = GetComponentHelper.GetFlickableComponent(thing);
+		
+		return GetPowerValue(flickable);
+	}
+	public static bool GetPowerValue(CompFlickable flickable)
+	{
+		Log.Message("ASDA");
+		if (flickable == null)
+		{
+			return true;
+		}
+
+		if (s_PowerValueContainer.ContainsKey(flickable))
+		{
+			return s_PowerValueContainer[flickable].Value;
+		}
+		
+		return false;
+	}
+	
 	public static void ToggleShouldSwitchPower(CompFlickable flickable)
 	{
 		if (s_SwitchPowerContainer.ContainsKey(flickable))

@@ -10,6 +10,8 @@
 
     <shouldSpawnUnpoweredLabel>Binaları inşa edildiğinde elektriğini kapat.</shouldSpawnUnpoweredLabel>
     <shouldSpawnUnpoweredTooltip>Binalar inşa edildiğinde elektriği olup olmamasını ayarla</shouldSpawnUnpoweredTooltip>
+    <shouldLoadPowerStateAfterLoadLabel>Kayıt dosyası yüklendiğinde binaların elektrik durumlarının yüklenmesine izin ver.</shouldLoadPowerStateAfterLoadLabel>
+    <shouldLoadPowerStateAfterLoadTooltip>Kayıt dosyası yüklendiğinde binaların elektrik durumlarını yükler. (Eski kayıt dosyasına eklendiği zaman önerilir.)</shouldLoadPowerStateAfterLoadTooltip>
 
     <hideTogglePowerLabel>Enerji akışını kontrol eden düğmeyi gizle.</hideTogglePowerLabel>
     <hideTogglePowerTooltip>Etkinleştirildiğinde, enerji akışını kontrol eden düğme gizlenir. \n(İnsanların binayı kullanmamasını istiyorsanız "İzin Ver" düğmesini kullanın.) \n(Sadece çalışmak için enerji isteyen binalar için geçerlidir!)</hideTogglePowerTooltip>

@@ -137,5 +137,26 @@ public static class FacilityHelper
 		
 		return false;
 	}
+
+	public static bool ShouldModifyPower(Thing __instance)
+	{
+		if (__instance == null)
+		{
+			return false;
+		}
+		
+		if(__instance is Building_ResearchBench || 
+		    __instance is Building_WorkTable)
+		{
+			return true;
+		}
+
+		return false;
+	}
+	
+	public static bool ShouldModifyPower(CompFlickable flickable)
+	{
+		return ShouldModifyPower(flickable.parent);
+	}
 }
 		

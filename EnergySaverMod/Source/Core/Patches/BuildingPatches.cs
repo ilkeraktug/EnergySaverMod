@@ -13,20 +13,40 @@ public static class Building_ResearchBench_SpawnSetup_Patches
 {
 	public static void Postfix(Building __instance, Map map, bool respawningAfterLoad)
 	{
-		if ((__instance is Building_ResearchBench || __instance is Building_WorkTable) && respawningAfterLoad == false)
+		if (respawningAfterLoad && EnerySaverModSettings.bShouldLoadPowerStateAfterLoad)
 		{
-			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance);
-			if (EnerySaverModSettings.bShouldSpawnUnpowered && flickable != null)
+			if(__instance is Building_MechGestator mechGestator)
 			{
-				PatchesHelper.SetSwitch(flickable, false);
+				if (mechGestator.ActiveMechBill != null)
+				{
+					return;
+				}
+			}
+
+			if (FacilityHelper.ShouldModifyPower(__instance))
+			{
+				FacilityHelper.TryStore(__instance);
+
+				FacilityHelper.SetPowerValue(__instance, FlickableContainer.GetPowerValue(__instance));
 			}
 		}
-
-		FacilityHelper.TryStore(__instance);
-
-		if (EnerySaverModSettings.bShouldSpawnUnpowered && respawningAfterLoad == false)
+		else
 		{
-			FacilityHelper.SetPowerValue(__instance, false);
+			if ((__instance is Building_ResearchBench || __instance is Building_WorkTable))
+			{
+				CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance);
+				if (EnerySaverModSettings.bShouldSpawnUnpowered && flickable != null)
+				{
+					PatchesHelper.SetSwitch(flickable, false);
+				}
+			}
+
+			FacilityHelper.TryStore(__instance);
+
+			if (EnerySaverModSettings.bShouldSpawnUnpowered)
+			{
+				FacilityHelper.SetPowerValue(__instance, false);
+			}
 		}
 	}
 }
