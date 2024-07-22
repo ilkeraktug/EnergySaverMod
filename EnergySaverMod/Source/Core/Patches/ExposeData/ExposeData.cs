@@ -34,7 +34,12 @@ public static class CompFlickable_ExposeData_Patcher
 		}
 		else
 		{
-			FlickableContainer.s_PowerValueContainer[__instance].Value = __instance.SwitchIsOn;
+			switch (Scribe.mode)
+			{
+				case LoadSaveMode.Saving:
+					FlickableContainer.s_PowerValueContainer[__instance].Value = __instance.SwitchIsOn;
+					break;
+			}
 		}
 
 		Scribe_Values.Look(ref FlickableContainer.s_FlickableContainer[__instance].Value, "flickableContainer", true, false);

@@ -117,7 +117,6 @@ public static class FlickableContainer
 	}
 	public static bool GetPowerValue(CompFlickable flickable)
 	{
-		Log.Message("ASDA");
 		if (flickable == null)
 		{
 			return true;
