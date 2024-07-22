@@ -11,7 +11,7 @@
     <shouldSpawnUnpoweredLabel>Spawn buildings unpowered.</shouldSpawnUnpoweredLabel>
     <shouldSpawnUnpoweredTooltip>Buildings will not have power when constructed.</shouldSpawnUnpoweredTooltip>
     <shouldLoadPowerStateAfterLoadLabel>Should load buildings power state when loading a save game.</shouldLoadPowerStateAfterLoadLabel>
-    <shouldLoadPowerStateAfterLoadTooltip>When enabled, buildings keep power state when loading a save game. (This is useful when the mod is added existing a save file for the first time )</shouldLoadPowerStateAfterLoadTooltip>
+    <shouldLoadPowerStateAfterLoadTooltip>When enabled, buildings keep power state when loading a save game. (This is useful when the mod is added an existing save file for the first time )</shouldLoadPowerStateAfterLoadTooltip>
 
     <hideTogglePowerLabel>Hide designate power button</hideTogglePowerLabel>
     <hideTogglePowerTooltip>When enabled, designate power button will not be shown. \n(Use "Allow Use Building" to pawns do NOT use the building) \n(Only works on the building that require power to work!)</hideTogglePowerTooltip>
