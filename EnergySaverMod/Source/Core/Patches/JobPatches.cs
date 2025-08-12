@@ -12,7 +12,7 @@ public static class Pawn_JobTracker_Pawn_JobTracker_StartJob
 {
 	public static void Postfix(Pawn_JobTracker __instance)
 	{
-		if (__instance.curJob?.def == JobDefOf.DoBill || __instance.curJob?.def == JobDefOf.Research)
+		if (__instance != null && (__instance.curJob?.def == JobDefOf.DoBill || __instance.curJob?.def == JobDefOf.Research))
 		{
 			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetA.Thing);
 			
@@ -23,7 +23,7 @@ public static class Pawn_JobTracker_Pawn_JobTracker_StartJob
 			
 			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetA.Thing as Building_ResearchBench, true);
 		}
-		else if (__instance.curJob?.def == JobDefOf.AnalyzeItem)
+		else if (__instance != null && __instance.curJob?.def == JobDefOf.AnalyzeItem)
 		{
 			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetB.Thing);
 			
@@ -34,44 +34,5 @@ public static class Pawn_JobTracker_Pawn_JobTracker_StartJob
 
 			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetB.Thing as Building_ResearchBench, true);
 		}
-	}
-}
-
-[HarmonyPatch(typeof(Pawn_JobTracker), nameof(Pawn_JobTracker.EndCurrentJob))]
-public static class Pawn_JobTracker_Pawn_JobTracker_EndCurrentJob
-{
-	public static bool Prefix(Pawn_JobTracker __instance, JobCondition condition, bool startNewJob = true, bool canReturnToPool = true)
-	{
-		if(__instance.curJob?.targetA.Thing is Building_MechGestator mechGestator)
-		 {
-		 	if (mechGestator.ActiveMechBill != null)
-		 	{
-		 		return true;
-		 	}
-		 }
-		
-		if (__instance.curJob?.def == JobDefOf.DoBill || __instance.curJob?.def == JobDefOf.Research)
-		{
-			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetA.Thing);
-			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetA.Thing))
-			{
-				PatchesHelper.SetSwitch(flickable, false);
-			}
-			
-			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetA.Thing as Building_ResearchBench, false);
-		}
-		else if (__instance.curJob?.def == JobDefOf.AnalyzeItem)
-		{
-			CompFlickable flickable = GetComponentHelper.GetFlickableComponent(__instance.curJob?.targetB.Thing);
-			
-			if(flickable != null && PatchesHelper.ShouldSwitchPower(__instance.curJob?.targetB.Thing))
-			{
-				PatchesHelper.SetSwitch(flickable, false);
-			}
-			
-			FacilityHelper.SetLinkedMultiAnalyzerSwitch(__instance.curJob?.targetB.Thing as Building_ResearchBench, false);
-		}
-
-		return true;
 	}
 }

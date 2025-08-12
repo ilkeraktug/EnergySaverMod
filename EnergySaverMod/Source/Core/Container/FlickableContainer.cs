@@ -33,7 +33,6 @@ public static class FlickableContainer
 	
 	public static bool GetIsAllowed(Thing thing)
 	{
-		//Log.Message($"Thing {thing}");
 		CompFlickable flickable = GetComponentHelper.GetFlickableComponent(thing);
 
 		return GetIsAllowed(flickable);
@@ -154,12 +153,12 @@ public static class FlickableContainer
 
 	public static OverlayHandle? GetOverlayHandle(CompPowerTrader powerTrader)
 	{
-		if (s_OverlayContainer.ContainsKey(powerTrader))
+		if (powerTrader != null && s_OverlayContainer.ContainsKey(powerTrader))
 		{
 			return s_OverlayContainer[powerTrader];
 		}
 		
-		return new OverlayHandle();
+		return null;
 	}
 	
 	public static void UpdateOverlayHandle(CompPowerTrader powerTrader, OverlayHandle? handle)
