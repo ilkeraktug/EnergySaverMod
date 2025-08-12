@@ -58,7 +58,6 @@ public static class ResearchProjectDef_CanBeResearchedAt_Patches
 		bool tempResult = PatchesHelper.CanUseNow(bench, ref shouldCare);
 		if (!ignoreResearchBenchPowerStatus && shouldCare)
 		{
-			//Log.Message($"CanBeResearchedAt({tempResult})");
 			__result = tempResult;
 		}
 	}

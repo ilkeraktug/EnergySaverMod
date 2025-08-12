@@ -37,14 +37,12 @@ public class PatchesHelper
 		{
 			if (powerTrader.PowerOn)
 			{
-				// Log.Message("100");
 				bShouldCare = true;
 				return true;
 			}
 			else if (powerTrader.PowerNet.CurrentStoredEnergy() > PowerConsumption ||
 			         powerTrader.PowerNet.CurrentEnergyGainRate() > PowerConsumption)
 			{
-				// Log.Message("200");
 				bShouldCare = true;
 				return true;
 			}
