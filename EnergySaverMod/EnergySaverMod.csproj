@@ -27,7 +27,7 @@
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DebugType>none</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnergySaver\1.5\Assemblies</OutputPath>
+        <OutputPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EnergySaver\1.6\Assemblies</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
@@ -74,6 +74,7 @@
         <Compile Include="Source\Core\Patches\ComponentPatches.cs" />
         <Compile Include="Source\Core\Patches\ExposeData\ExposeData.cs" />
         <Compile Include="Source\Core\Patches\GizmosPatches.cs" />
+        <Compile Include="Source\Core\Patches\JobDriverPatches.cs" />
         <Compile Include="Source\Core\Patches\JobPatches.cs" />
         <Compile Include="Source\Core\Patches\StudyUtilityPatches.cs" />
     </ItemGroup>
