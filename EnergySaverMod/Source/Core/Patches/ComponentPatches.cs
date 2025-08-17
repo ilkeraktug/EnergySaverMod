@@ -11,7 +11,7 @@ namespace EnergySaverMod.Source.Core.Patches;
 	{
 		public static bool Prefix(CompPowerTrader __instance, ref OverlayHandle? ___overlayPowerOff, ref OverlayHandle? ___overlayNeedsPower)
 		{
-			if (!__instance.parent.Spawned)
+			if (!__instance.parent.Spawned && __instance.parent.Map == null)
 			{
 				return true;
 			}
